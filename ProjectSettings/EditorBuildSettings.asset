@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: b90a68d951f2250409ae80401532538c
+  - enabled: 1
+    path: Assets/Scenes/MainStory.unity
+    guid: 4b945135577abbf4faaab44ec1388330
+  - enabled: 1
+    path: Assets/Scenes/TutorialShellJump.unity
+    guid: 0b76d0c8646393a4db49cf84dbd229dd
+  - enabled: 1
+    path: Assets/Scenes/ShellJump.unity
+    guid: 321bc75b4499934478abc018da164abe
+  - enabled: 1
+    path: Assets/Scenes/TutorialEggBeat.unity
+    guid: c8f81a3e8a6f1bd42b40a10a584b172a
+  - enabled: 1
+    path: Assets/Scenes/EggBeat.unity
+    guid: 71658420608ba2841927997415dd2eae
+  - enabled: 1
+    path: Assets/Scenes/TutorialFeatherFlap.unity
+    guid: 27bc42cb3294e7143acc252f753c96cf
+  - enabled: 1
+    path: Assets/Scenes/FeatherFlap.unity
+    guid: 14a24679d3bcbd140bef4f13e5c3722d
+  - enabled: 1
+    path: Assets/Scenes/ScoreScreen.unity
+    guid: ef64f0a8b25ee4640a22efd4d38db674
+  m_configObjects: {}

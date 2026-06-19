@@ -27,5 +27,10 @@ public class ResultScene : MonoBehaviour
     {
         GameData.ResetSession();
         SceneManager.LoadScene("MainMenu");
+        Destroy(GameObject.Find("PoseManager"));
+        Destroy(GameObject.Find("Bootstrap"));
+
+
+
     }
 }

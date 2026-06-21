@@ -129,6 +129,8 @@ public class EggBeatManager : MonoBehaviour
     void Success()
     {
         score += 1000;
+        ComboManager.Instance.OnScore();          
+
 
         Debug.Log("SUCCESS");
 

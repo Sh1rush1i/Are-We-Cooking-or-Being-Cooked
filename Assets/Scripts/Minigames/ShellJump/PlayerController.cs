@@ -116,8 +116,9 @@ public class PlayerController : MonoBehaviour
         );
 
         ShellJumpManager.Instance.AddScore(1000);
+        ComboManager.Instance.OnScore();          
+        // ScorePopupManager.Instance.Spawn(currentShell.transform.position); 
 
-        // spawn berikutnya
         nextShell =
             spawner.SpawnNextShell();
 

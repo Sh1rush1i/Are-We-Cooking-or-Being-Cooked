@@ -1,14 +1,41 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
     [Header("Panels")]
     public GameObject minigamePanel;
+    [SerializeField] private Image overlay; 
+    [SerializeField] private float duration = 1f;
 
     void Start()
     {
         minigamePanel.SetActive(false);
+    }
+
+    private void SceneLoadAnim(string sceneName)
+    {
+        if (overlay == null) return;
+
+       
+        overlay.gameObject.SetActive(true);
+        overlay.color = new Color(0, 0, 0, 0);
+
+  
+        LeanTween.value(gameObject, 0f, 1f, duration)
+                 .setEase(LeanTweenType.easeInOutQuad)
+                 .setOnUpdate((float val) =>
+                 {
+                     Color c = overlay.color;
+                     c.a = val;
+                     overlay.color = c;
+                 })
+                 .setOnComplete(() =>
+                 {
+
+                     SceneManager.LoadScene(sceneName);
+                 });
     }
 
     // =========================
@@ -43,17 +70,19 @@ public class MainMenuUI : MonoBehaviour
 
     public void LoadShellJump()
     {
-        SceneManager.LoadScene("ShellJump");
+        SceneLoadAnim("ShellJump");
+
     }
 
     public void LoadEggBeat()
     {
-        SceneManager.LoadScene("EggBeat");
+        SceneLoadAnim("EggBeat");
+    
     }
 
     public void LoadFeatherFlap()
     {
-        SceneManager.LoadScene("FeatherFlap");
+        SceneLoadAnim("FeatherFlap");
     }
 
     // =========================
@@ -62,17 +91,18 @@ public class MainMenuUI : MonoBehaviour
 
     public void LoadShellJumpTutorial()
     {
-        SceneManager.LoadScene("TutorialShellJump");
+        SceneLoadAnim("TutorialShellJump");
     }
-
     public void LoadEggBeatTutorial()
     {
-        SceneManager.LoadScene("TutorialEggBeat");
+        SceneLoadAnim("TutorialEggBeat");
+
     }
 
     public void LoadFeatherFlapTutorial()
     {
-        SceneManager.LoadScene("TutorialFeatherFlap");
+        SceneLoadAnim("TutorialFeatherFlap");
+
     }
 
     public void MainStory()

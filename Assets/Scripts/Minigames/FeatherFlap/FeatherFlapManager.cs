@@ -41,6 +41,8 @@ public class FeatherFlapManager : MonoBehaviour
         if(gameOver) return;
 
         score+= 1000;
+        ComboManager.Instance.OnScore();          
+
     }
 
     public void GameOver()
@@ -51,6 +53,7 @@ public class FeatherFlapManager : MonoBehaviour
 
         birdController.enabled = false;
 
+        
         obstacleSpawner.enabled = false;
         obstacleSpawner.CancelInvoke();
 

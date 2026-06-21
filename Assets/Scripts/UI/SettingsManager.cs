@@ -32,6 +32,10 @@ public class SettingsManager : MonoBehaviour
 
     private bool dyslexiaEnabled = false;
 
+    [Header("Music Track")]
+    private AudioClip currentClip;
+    private Coroutine fadeCoroutine;
+
     private void Awake()
     {
         if (Instance == null)
@@ -59,6 +63,51 @@ public class SettingsManager : MonoBehaviour
             dyslexiaToggle.onValueChanged.RemoveListener(ToggleDyslexia);
             dyslexiaToggle.onValueChanged.AddListener(ToggleDyslexia);
         }
+    }
+
+    public void PlayMusic(AudioClip newClip, bool loop = true, float fadeDuration = 1f)
+{
+    if (musicSource == null || newClip == null) return;
+
+    // kalau musiknya sama, gak usah diulang dari awal
+    if (currentClip == newClip && musicSource.isPlaying) return;
+
+    currentClip = newClip;
+
+    if (fadeCoroutine != null)
+        StopCoroutine(fadeCoroutine);
+
+    fadeCoroutine = StartCoroutine(FadeToNewClip(newClip, loop, fadeDuration));
+}
+
+    private IEnumerator FadeToNewClip(AudioClip newClip, bool loop, float duration)
+    {
+        float startVolume = musicSource.volume;
+
+        // fade out musik lama
+        float t = 0f;
+        while (t < duration / 2f)
+        {
+            t += Time.deltaTime;
+            musicSource.volume = Mathf.Lerp(startVolume, 0f, t / (duration / 2f));
+            yield return null;
+        }
+
+        // ganti clip
+        musicSource.clip = newClip;
+        musicSource.loop = loop;
+        musicSource.Play();
+
+        // fade in musik baru, balik ke volume sesuai setting
+        t = 0f;
+        while (t < duration / 2f)
+        {
+            t += Time.deltaTime;
+            musicSource.volume = Mathf.Lerp(0f, musicVolume, t / (duration / 2f));
+            yield return null;
+        }
+
+        musicSource.volume = musicVolume;
     }
 
     // =========================

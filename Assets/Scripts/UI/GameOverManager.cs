@@ -1,16 +1,48 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour
 {
     public GameObject finishPanel;
 
+    [SerializeField] private Image overlay; 
+    [SerializeField] private float duration = 1f;
+
+    public GameObject gameObstacle;
+
+
+
+
     void Start()
     {
         finishPanel.SetActive(false);
     }
 
-    // Dipanggil saat game selesai
+    private void SceneLoadAnim(string sceneName)
+    {
+        if (overlay == null) return;
+
+       
+        overlay.gameObject.SetActive(true);
+        overlay.color = new Color(0, 0, 0, 0);
+
+  
+        LeanTween.value(gameObject, 0f, 1f, duration)
+                 .setEase(LeanTweenType.easeInOutQuad)
+                 .setOnUpdate((float val) =>
+                 {
+                     Color c = overlay.color;
+                     c.a = val;
+                     overlay.color = c;
+                 })
+                 .setOnComplete(() =>
+                 {
+
+                     SceneManager.LoadScene(sceneName);
+                 });
+    }
+
     public void GameFinished()
     {
         finishPanel.SetActive(true);
@@ -18,13 +50,13 @@ public class GameOverManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    // Restart minigame
     public void RestartGame()
     {
         Time.timeScale = 1f;
 
         Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
+        SceneLoadAnim(currentScene.name);
+
     }
 
     // Kembali ke Main Menu
@@ -32,26 +64,37 @@ public class GameOverManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        SceneManager.LoadScene("MainMenu");
+        SceneLoadAnim("MainMenu");
+
     }
 
     public void LoadShellJumpTutorial()
     {
-        SceneManager.LoadScene("TutorialShellJump");
+        SceneLoadAnim("TutorialShellJump");
+        
     }
 
     public void LoadEggBeatTutorial()
     {
-        SceneManager.LoadScene("TutorialEggBeat");
+        SceneLoadAnim("TutorialEggBeat");
+
     }
 
     public void LoadFeatherFlapTutorial()
     {
-        SceneManager.LoadScene("TutorialFeatherFlap");
+        SceneLoadAnim("TutorialFeatherFlap");
+        
     }
 
     public void LoadScoreScene()
     {
-        SceneManager.LoadScene("ScoreScreen");
+       if (gameObstacle != null)
+            gameObstacle.SetActive(true);
+
+        Time.timeScale = 1f;
+
+        // SceneManager.LoadScene("ScoreScreen");
+        SceneLoadAnim("ScoreScreen");
+
     }
 }
